@@ -7,6 +7,9 @@
 		"contacts": {
 			"description": "Needed to access the contacts",
 			"access": "readwrite"
+		},
+		"systemXHR": {
+			"description": "Required to make Ajax Calls over the Network"
 		}
 	},
 	"type": "privileged",

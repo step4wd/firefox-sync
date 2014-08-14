@@ -1,3 +1,5 @@
+var contacts = [];
+
 $(document).ready(function() {
 	//get all the contacts without applying any filter
 	var cursor = navigator.mozContacts.getAll({});
@@ -7,9 +9,6 @@ $(document).ready(function() {
 		if(cursor.result) {
 			//take the contact name as a heading
 			var contact = "<div><h3>" + cursor.result.name + "</h3>";
-			console.log( cursor.result.photo );
-			
-			
 			
 			//loop through all the properties of the contact
 			$.each(cursor.result, function(key, value) {
