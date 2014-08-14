@@ -1,0 +1,22 @@
+{
+	"name": "FirefoxOS Sync",
+	"version": "0.1",
+	"description": "App for your FirefoxOS to sync contacts, calendar etc with your online server.",
+	"launch_path": "/index.html",
+	"permissions": {
+		"contacts": {
+			"description": "Needed to access the contacts",
+			"access": "readwrite"
+		}
+	},
+	"type": "privileged",
+	"developer": {
+		"name": "M. Ahmad Zafar",
+		"url": "http://step4wd.com"
+	},
+	"icons": {
+		"128": "/icons/128.png",
+		"64": "/icons/64.png",
+		"32": "/icons/32.png"
+	}
+}
