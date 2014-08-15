@@ -1,5 +1,23 @@
+function send_data(counter) {
+	$.ajax({
+		type: "POST",
+		url: 'http://192.168.100.4/mobile-sync/save_contacts.php',
+		data: { contacts: JSON.stringify(contacts[counter]) },
+		beforeSend: function() {
+			
+		},
+		success: function(data) {
+			if( counter < contacts.length ) {
+				setTimeout( send_data( ++counter ), 500 );
+			}
+		},
+		error: function(request, status, error) {
+			alert('error: ' + request.responseText);
+		}
+	});
+}
+
 $('#btn_save_server').click(function() {
-	contacts = $('#contacts').html();
 	
 	$.ajaxPrefilter(function(options) {
 		if (options.xhrConstructParam) {
@@ -20,18 +38,12 @@ $('#btn_save_server').click(function() {
 		xhrConstructParam: xhrConstructParam
 	});
 	
-	$.ajax({
-		type: "POST",
-		url: 'http://www.local/mobile-sync/save_contacts.php',
-		data: { contacts: contacts },
-		beforeSend: function() {
-			
-		},
-		success: function(data) {
-			alert('done');
-		},
-		error: function(request, status, error) {
-			alert('error: ' + request.responseText);
-		}
-	});
+	send_data( 0 );
+	//send the contact over ajax one by one
+	//for(var i = 0; i < contacts.length; i++) {
+		
+		//setTimeout( send_data( contacts[i] ), 500 );
+		//$.delay(500);
+	//}
+	
 });

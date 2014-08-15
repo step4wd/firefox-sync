@@ -14,18 +14,24 @@ $(document).ready(function() {
 			$.each(cursor.result, function(key, value) {
 				
 				//if a picture is provided, treat it differently
-				if( key == 'photo' && value != null ) {
-					//large contact photo create from blob object
-					contact += "<div><img src='" + window.URL.createObjectURL(value[0]) + "' /></div>";
-					//small contact photo create from blob object
-					contact += "<div><img src='" + window.URL.createObjectURL(value[1]) + "' /></div>";
+				if( key == 'photo' && value != null && value.length != 0 ) {
+					try {
+						//large contact photo create from blob object
+						contact += "<div><img src='" + window.URL.createObjectURL(value[0]) + "' /></div>";
+						
+						//small contact photo create from blob object
+						contact += "<div><img src='" + window.URL.createObjectURL(value[1]) + "' /></div>";
+					}
+					catch(e) {
+						console.log("Photo Error for '" + cursor.result.name[0] + "'");
+						console.log(e);
+					}
 				}
 				//make sure the property is not set to null not it matches any of the skipped list
 				else if( value != null && $.inArray( key, ["init", "toJSON"] ) < 0 ) {
 					
 					//for complex objects, list all of their childs
 					if( typeof(value) === 'object' && $.inArray( key, ["name", "givenName", "additionalName", "familyName"] ) < 0 ) {
-						
 						contact += "<div><strong>" + key + ": </strong>";
 						for( var i = 0; i < value.length; i++ ) {
 							contact += "<div>" + value[i].type + " " + value[i].value + "</div>";
@@ -41,6 +47,8 @@ $(document).ready(function() {
 			//fill the contacts on the page
 			$('#contacts').html( $('#contacts').html() + contact );
 			
+			//add the raw result into the contacts array
+			contacts.push( cursor.result );
 			cursor.continue();
 		}
 	};
